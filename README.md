@@ -31,6 +31,13 @@ Simple Solidity contract that allows users to donate ETH.
 - The owner (and only the owner) can retrieve all the accumulated ETH on the contract.
 - A minimum amount of $50 in ETH is set, using a **``Chainlink Oracle``** price feed, to check the value of ETH in real time and thus calculate its current USD value.
 
+### 👩‍🍳 Brownie
+Added use of external contracts (i.e Chainlink).
+
+Declared in `brownie-config.yaml`:
+- Dependencies being used (`smartcontractkit/chainlink-brownie-contracts@1.1.1`)
+- Compiler remapping needed (`@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1'`)
+
 # 🍫 Ganache
 Using [Ganache](https://trufflesuite.com/ganache/) to run a personal Ethereum blockchain locally to easily deploy and test and learn how the chain operates. 
 
