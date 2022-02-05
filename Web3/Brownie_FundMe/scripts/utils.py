@@ -1,10 +1,9 @@
 from brownie import accounts, network, config, MockV3Aggregator
 
-from web3 import Web3
 
 # priceFeed Mock Parameters
-DECIMALS = 18
-STARTING_PRICE = 2000
+DECIMALS = 8
+STARTING_PRICE = 200000000000
 
 # Environment definitions
 LOCAL_BLOCKCHAIN_ENV = ["development", "ganache-local"]
@@ -21,7 +20,7 @@ def deploy_mock_priceFeed():
     if len(MockV3Aggregator) <= 0:
         MockV3Aggregator.deploy(
             DECIMALS,
-            Web3.toWei(STARTING_PRICE, "ether"),
+            STARTING_PRICE,
             {"from": get_account()},
         )
         print("Mock priceFeed contract deployed.")
