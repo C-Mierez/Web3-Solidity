@@ -46,6 +46,8 @@ In order to work on the contract in a local Ganache chain -- in which the Chainl
 
     This allows to later decide what contract to use when in the `deploy.py` script. Useful for local deployments in which the Chainlink contracts don't exist, and thus would require a mock in their place instead.
 
+- **Forking** Taking a "snapshot" of the current state of a mainnet and running it locally to interact with existing contracts deployed in it. 
+
 # 🍫 Ganache
 Using [Ganache](https://trufflesuite.com/ganache/) to run a personal Ethereum blockchain locally to easily deploy and test and learn how the chain operates. 
 
