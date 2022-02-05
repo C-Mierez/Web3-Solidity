@@ -1,6 +1,8 @@
 from brownie import FundMe, network, config, MockV3Aggregator
 
-from scripts.utils import get_account
+from scripts.utils import get_account, deploy_mock_priceFeed
+
+from web3 import Web3
 
 
 def deploy_fund_me():
@@ -16,13 +18,9 @@ def deploy_fund_me():
         print(
             f"Active network: {active_network}.\nDeploying mock priceFeed contract..."
         )
-        contract_mock_V3Agg = MockV3Aggregator.deploy(
-            18,
-            2000000000000000000000,
-            {"from": account},
-        )
-        priceFeed_address = contract_mock_V3Agg.address
-        print("Mock priceFeed contract deployed.")
+        # Check whether the mock contract has already been deployed
+        deploy_mock_priceFeed()
+        priceFeed_address = MockV3Aggregator[-1].address
 
     contract_fm = FundMe.deploy(
         priceFeed_address,
