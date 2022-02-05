@@ -28,6 +28,14 @@ contract FundMe {
         _;
     }
 
+    function getEntranceFee() public view returns (uint256) {
+        // Minimum USD value
+        uint256 minimumUSD = 50 * 10**18;
+        uint256 price = getPrice();
+        uint256 precision = 1 * 10**18;
+        return (minimumUSD * precision) / price;
+    }
+
     function fund() public payable {
         // Set a threshold for funding in terms of USD value
         uint256 minimumUSD = 50 * (10**18);
@@ -45,7 +53,7 @@ contract FundMe {
 
     function getPrice() public view returns (uint256) {
         (, int256 answer, , , ) = priceFeed.latestRoundData();
-        return uint256(answer);
+        return uint256(answer * (10**10));
     }
 
     // 1 Eth = 1000000000 Gwei
@@ -55,7 +63,7 @@ contract FundMe {
         returns (uint256)
     {
         uint256 ethPrice = getPrice();
-        uint256 ethAmountInUsd = (_ethAmount * ethPrice) / (10**8);
+        uint256 ethAmountInUsd = (_ethAmount * ethPrice) / (10**18);
         return ethAmountInUsd;
     }
 
