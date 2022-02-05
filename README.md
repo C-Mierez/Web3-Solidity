@@ -1,6 +1,8 @@
 # Web3-Solidity
 Initial approach to Web3 and Solidity Contracts.
 
+        This file is primarily made for myself as a place where I can dump information that I find relevant throughout my learning process. It exists both to get a general idea of what is done in the project, and to serve as a reminder of all good the practicies that were (and should) be applied regularly.
+
 ## 1 | SimpleStorage
 Extremely simple first Solidity contract, which allows users to store a number associated to them and retrieve it.
 
@@ -66,3 +68,13 @@ Brownie project structure has the following features:
 - `tests` 
 
 Used throughout the different sub-projects. Looking to see and compare how it facilitates development as opposed to doing things manually.
+
+# 🧾 Tests
+Due to ease of use, tests are run mainly on a local **Ganache** chain. In case of having dependencies, these should be **Mocked**.
+
+Additionally, integration tests should later be performed on a live **Testnet**.
+
+Optional further testing can be done using:
+- Brownie mainnet forks
+- Custom mainnet forks
+- Local Ganache chains
