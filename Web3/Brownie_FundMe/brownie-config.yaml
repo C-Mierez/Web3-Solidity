@@ -5,6 +5,12 @@ dependencies:
 compiler:
   solc:
     remappings:
-      - '@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1'
+      - "@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1"
 wallets:
   from_key: ${PRIVATE_KEY}
+networks:
+  development:
+    verify: False
+  rinkeby:
+    verify: True
+    eth_usd_priceFeed: "0x9326BFA02ADD2366b30bacB125260Af641031331"
