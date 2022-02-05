@@ -28,6 +28,7 @@ def deploy_fund_me():
         publish_source=config["networks"][active_network]["verify"],
     )
     print(f"Contract deployed to: {contract_fm.address}")
+    return contract_fm
 
 
 def main():
