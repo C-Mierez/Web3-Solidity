@@ -14,5 +14,8 @@ networks:
   rinkeby:
     verify: True
     eth_usd_priceFeed: "0x9326BFA02ADD2366b30bacB125260Af641031331"
+  mainnet-fork:
+    verify: False
+    eth_usd_priceFeed: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
   ganache-local:
     verify: False
