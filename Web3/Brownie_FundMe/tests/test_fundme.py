@@ -8,7 +8,8 @@ def test_can_fund_and_withdraw():
     account = get_account()
     contract_fm = deploy_fund_me()
 
-    entrance_fee = contract_fm.getEntranceFee()
+    # Hard-coding an extra 100 to avoid lack of funds issues
+    entrance_fee = contract_fm.getEntranceFee() + 100
     tx = contract_fm.fund(
         {
             "from": account,
