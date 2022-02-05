@@ -38,6 +38,14 @@ Declared in `brownie-config.yaml`:
 - Dependencies being used (`smartcontractkit/chainlink-brownie-contracts@1.1.1`)
 - Compiler remapping needed (`@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1'`)
 
+Verifying the contracts on Etherscan (or alike) using its API key. Brownie performs the ***flattening*** of the contract so that all dependencies can be uploaded and verified.
+
+In order to work on the contract in a local Ganache chain -- in which the Chainlink dependencies do not exist -- there are two ways to approach this:
+- **Mocking:** Parameterize the `FundMe.sol` contract.
+  - Adding a parameter to the constructor with the address of the contracts used. So instead of creating them inside functions, they are declared globally.
+
+    This allows to later decide what contract to use when in the `deploy.py` script. Useful for local deployments in which the Chainlink contracts don't exist, and thus would require a mock in their place instead.
+
 # 🍫 Ganache
 Using [Ganache](https://trufflesuite.com/ganache/) to run a personal Ethereum blockchain locally to easily deploy and test and learn how the chain operates. 
 
