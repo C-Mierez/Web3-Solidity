@@ -1,6 +1,6 @@
 from brownie import FundMe, network, config, MockV3Aggregator
 
-from scripts.utils import get_account, deploy_mock_priceFeed
+from scripts.utils import get_account, deploy_mock_priceFeed, LOCAL_BLOCKCHAIN_ENV
 
 from web3 import Web3
 
@@ -11,7 +11,7 @@ def deploy_fund_me():
     # additional parameter (Rinkeby Chainlink contract address)
     # This allows dynamically changing the used address depending on the env (Test, Local, Live,...)
     active_network = network.show_active()
-    if active_network != "development":
+    if active_network not in LOCAL_BLOCKCHAIN_ENV:
         priceFeed_address = config["networks"][active_network]["eth_usd_priceFeed"]
     else:
         # If in development, deploy a mock
