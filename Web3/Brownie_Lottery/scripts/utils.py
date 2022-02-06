@@ -6,6 +6,7 @@ from brownie import (
     MockV3Aggregator,
     VRFCoordinatorMock,
     LinkToken,
+    interface,
 )
 
 
@@ -17,7 +18,7 @@ def get_account(index=None, id=None):
     if index:
         return accounts[index]
 
-    if id:
+    if id and network.show_active() not in LOCAL_BLOCKCHAIN_ENV:
         return accounts.load(id)
 
     if (
@@ -87,7 +88,7 @@ def _deploy_mocks():
         link_token.address,
         {"from": account},
     )
-    print("Deployed mock Price Feed.")
+    print("Deployed Mocks.")
 
 
 # My own take on a cohesive and dynamic method
@@ -106,3 +107,25 @@ def _deploy_mocks():
 #         {"from": account},
 #     )
 #     print("Deployed mock Price Feed.")
+
+
+def fund_with_link(
+    contract_address,
+    account=None,
+    link_token=None,
+    amount=100000000000000000,  # 0.1 LINK
+):
+    account = account if account else get_account()
+    link_token = link_token if link_token else get_contract("link_token")
+
+    print(f"Funding contract {contract_address} with LINK...")
+    # One straight forward way of doing the funding
+    # Possible since we have access to the entire LinkToken definition
+    tx = link_token.transfer(contract_address, amount, {"from": account})
+
+    # When we only have access to the Interface:
+    # link_token_contract = interface.LinkTokenInterface(link_token.address)
+    # tx = link_token_contract.transfer(contract_address, amount, {"from": account})
+    tx.wait(1)
+    print("Funded contract with LINK.")
+    return tx
