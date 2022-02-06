@@ -2,7 +2,6 @@
 Initial approach to Web3 and Solidity Contracts.
 
 > ## Notice
-> ***
 > This file is primarily made for myself as a place where I can dump information that I find relevant throughout my learning process. It exists both to get a general idea of what is done in the project, and to serve as a reminder of all good the practicies that were (and should) be applied regularly.
 
 ## 1 | SimpleStorage
