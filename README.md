@@ -111,4 +111,20 @@ Optional further testing can be done using:
 > - `Contract` is used for contracts that are **NOT** in the project, but are already deployed in whatever environment being worked on.
 > 
 >   This was used for the Lottery dependencies, in which the Chainlink contracts already existed in the testnets and thus just needed to be interacted with. 
+> 
+> Additionally, when there's no access to a contract but its Interface is available, Brownie has an `interface` class which can be used to interact with the contract as well.
+> 
+> An example of this in this project is the following:
+>      
+>      interface.LinkTokenInterface(link_token.address)
+***
+> When using [PyTest](https://docs.pytest.org/en/7.0.x/), it is common to find a `conftest.py` file inside the `test` folder.
+>
+> This file is used to define *fixtures* on a global scope, so that they can be used in multiple test files.
+>
+> Fixtures are functions that allow an easier and less repetitive way of defining data for the tests, such as Database connection details, URLs, inputs, etc.
+> 
+> A fixture is defined using the following decorator below a function:
+> 
+>     @pytest.fixture
 ***
