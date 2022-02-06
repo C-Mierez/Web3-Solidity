@@ -30,6 +30,9 @@ contract Lottery is VRFConsumerBase, Ownable {
     uint256 public vrf_fee;
     bytes32 public vrf_keyhash;
 
+    // Events
+    event RequestedRandomness(bytes32 requestId);
+
     constructor(
         address _priceFeedAddress,
         address _vrfCoordinator,
@@ -93,7 +96,8 @@ contract Lottery is VRFConsumerBase, Ownable {
 
         // Request VRF to chainlink oracle
         // Method already returns a bytes32 [requestId]
-        requestRandomness(vrf_keyhash, vrf_fee);
+        bytes32 requestId = requestRandomness(vrf_keyhash, vrf_fee);
+        emit RequestedRandomness(requestId);
     }
 
     // Chainlink VRF node response method
