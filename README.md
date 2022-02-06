@@ -111,7 +111,5 @@ Optional further testing can be done using:
 > - `ProjectContract` is available inside the project, and since it is compiled by Brownie, it offers a wide range of contract-specific functionality.
 > - `Contract` is used for contracts that are **NOT** in the project, but are already deployed in whatever environment being worked on.
 > 
->   This was used for the Lottery dependencies, in which the Chainlink contracts already existed in the testnets and thus just needed to be interacted with. Unlike the FundMe project, these dependencies were not copied manually to the contracts folder, so the only way of interacting with them was by knowing their Address and ABI.
-
-
+>   This was used for the Lottery dependencies, in which the Chainlink contracts already existed in the testnets and thus just needed to be interacted with. 
 ***
