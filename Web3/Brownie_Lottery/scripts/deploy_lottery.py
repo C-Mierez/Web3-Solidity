@@ -6,7 +6,7 @@ from scripts.utils import get_account, get_contract, fund_with_link
 def deploy_lottery():
     account = get_account(id="cmdev")
     print("Deploying contracts...")
-    Lottery.deploy(
+    contract = Lottery.deploy(
         get_contract("eth_usd_price_feed").address,
         get_contract("vrf_coordinator").address,
         get_contract("link_token").address,
@@ -16,6 +16,7 @@ def deploy_lottery():
         publish_source=config["networks"][network.show_active()].get("verify", False),
     )
     print("Deployed.")
+    return contract
 
 
 def start_lottery():

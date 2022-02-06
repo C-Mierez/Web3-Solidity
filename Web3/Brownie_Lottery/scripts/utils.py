@@ -35,7 +35,7 @@ def get_account(index=None, id=None):
 contract_to_mock = {
     "eth_usd_price_feed": MockV3Aggregator,
     "vrf_coordinator": VRFCoordinatorMock,
-    "link_token": VRFCoordinatorMock,
+    "link_token": LinkToken,
 }
 
 
@@ -67,7 +67,7 @@ def get_contract(contract_name):
         contract = Contract.from_abi(
             contract_type._name,
             contract_address,
-            contract_type._abi,
+            contract_type.abi,
         )
     return contract
 
@@ -91,7 +91,7 @@ def _deploy_mocks():
     print("Deployed Mocks.")
 
 
-# My own take on a cohesive and dynamic method
+# I'd prefer making my own method that's more cohesive and dynamic
 # Would likely need some kind of dynamic parameter storing
 # And would need to adjust to the amount of parameters that particular contract's constructor takes
 # mock_default_params = {
