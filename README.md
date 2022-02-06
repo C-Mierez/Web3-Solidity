@@ -87,3 +87,7 @@ Optional further testing can be done using:
 
 # 👀 Other
 - There is a Solidity compiler-specific [reason](https://ethereum.stackexchange.com/a/64109) as to why `address` and `address payable` are two different types. 
+- Randomness in critical apps is tricky subject, and using pseudo-random methods can lead to potential security risks and vulnerability. Aformentioned methods are used for the sake of simplicity. But in a real production app, randomness should be handled using a different approach.
+  - One of the unsecure but used methods is using a *Globally available variable* value and play around with it somehow, for example, hashing together a bunch of data like block timestamp, difficulty, nonce, and so on.
+  - In this project, a secure randomness approach is the use of `Chainlink VRF` (Verifiable Random Function), which is a far more secure way to handle this requirement.
+    - When using Chainlink VRF, it is actually an **asynchronous** operation. Our contract sends a tx (Request) to the chainlink node, paying the network gas fee AND an oracle fee. But a result is not immediately available. Instead, the contract waits until the chainlink node interacts with it and delivers the requested random number (Response).
