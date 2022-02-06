@@ -1,4 +1,12 @@
-from brownie import accounts, network, config, Contract, MockV3Aggregator
+from brownie import (
+    accounts,
+    network,
+    config,
+    Contract,
+    MockV3Aggregator,
+    VRFCoordinatorMock,
+    LinkToken,
+)
 
 
 LOCAL_BLOCKCHAIN_ENV = ["development", "ganache-local"]
@@ -23,7 +31,11 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 
-contract_to_mock = {"eth_usd_price_feed": MockV3Aggregator}
+contract_to_mock = {
+    "eth_usd_price_feed": MockV3Aggregator,
+    "vrf_coordinator": VRFCoordinatorMock,
+    "link_token": VRFCoordinatorMock,
+}
 
 
 def get_contract(contract_name):
@@ -50,6 +62,7 @@ def get_contract(contract_name):
 
         # Using Contract class to interact with contracts that already exist and are deployed but are NOT in the project
         # Docs https://eth-brownie.readthedocs.io/en/stable/api-network.html?highlight=from_abi#brownie.network.contract.Contract
+        # This is returning a mock contract based on the already existing contract abi
         contract = Contract.from_abi(
             contract_type._name,
             contract_address,
@@ -67,6 +80,11 @@ def _deploy_mocks():
     MockV3Aggregator.deploy(
         DECIMALS,
         INITIAL_VALUE,
+        {"from": account},
+    )
+    link_token = LinkToken.deploy({"from": account})
+    VRFCoordinatorMock.deploy(
+        link_token.address,
         {"from": account},
     )
     print("Deployed mock Price Feed.")
