@@ -1,7 +1,9 @@
 # Web3-Solidity
 Initial approach to Web3 and Solidity Contracts.
 
-        This file is primarily made for myself as a place where I can dump information that I find relevant throughout my learning process. It exists both to get a general idea of what is done in the project, and to serve as a reminder of all good the practicies that were (and should) be applied regularly.
+> ## Notice
+> ***
+> This file is primarily made for myself as a place where I can dump information that I find relevant throughout my learning process. It exists both to get a general idea of what is done in the project, and to serve as a reminder of all good the practicies that were (and should) be applied regularly.
 
 ## 1 | SimpleStorage
 Extremely simple first Solidity contract, which allows users to store a number associated to them and retrieve it.
@@ -54,7 +56,14 @@ In order to work on the contract in a local Ganache chain -- in which the Chainl
 Loterry app where any user can participate and win the prize pot.
 - Users enter the lottery by paying a certain USD value of ETH.
 - Admin can choose when to close the lottery.
-- A random winner will be selected.
+- A random winner will be selected using ``Chainlink VRF``.
+
+### 👩‍🍳 Brownie
+A complete rework in favour of modularization is made in comparison to the previous projects.
+- `utils.py` Contains far more generic methods that allow easier integration and switching between different working environments (Local networks, forks, testnets, mainnets).
+
+  Additionally provides an easier and dynamic way of obtaining the contract address of the dependencies corresponding to the network being worked on.
+- Deploying mocks is only done when mocks have not been previously created, and it's done transparently only when needed.
 
 # 🍫 Ganache
 Using [Ganache](https://trufflesuite.com/ganache/) to run a personal Ethereum blockchain locally to easily deploy and test and learn how the chain operates. 
@@ -85,9 +94,24 @@ Optional further testing can be done using:
 - Custom mainnet forks
 - Local Ganache chains
 
-# 👀 Other
-- There is a Solidity compiler-specific [reason](https://ethereum.stackexchange.com/a/64109) as to why `address` and `address payable` are two different types. 
-- Randomness in critical apps is tricky subject, and using pseudo-random methods can lead to potential security risks and vulnerability. Aformentioned methods are used for the sake of simplicity. But in a real production app, randomness should be handled using a different approach.
-  - One of the unsecure but used methods is using a *Globally available variable* value and play around with it somehow, for example, hashing together a bunch of data like block timestamp, difficulty, nonce, and so on.
-  - In this project, a secure randomness approach is the use of `Chainlink VRF` (Verifiable Random Function), which is a far more secure way to handle this requirement.
-    - When using Chainlink VRF, it is actually an **asynchronous** operation. Our contract sends a tx (Request) to the chainlink node, paying the network gas fee AND an oracle fee. But a result is not immediately available. Instead, the contract waits until the chainlink node interacts with it and delivers the requested random number (Response).
+# 👀 Other Notes
+> There is a Solidity compiler-specific [reason](https://ethereum.stackexchange.com/a/64109) as to why `address` and `address payable` are two different types. 
+>
+> In short, it exists as a way to explicitly state whether an address will be involved in any kind of transfer operation. 
+***
+> Randomness in critical apps is tricky subject, and using pseudo-random methods can lead to potential security risks and vulnerability. Aformentioned methods are used for the sake of simplicity. But in a real production app, randomness should be handled using a different approach.  
+>> One of the unsecure but used methods is using a *Globally available variable* value and play around with it somehow, for example, hashing together a bunch of data like block timestamp, difficulty, nonce, and so on.
+>
+>> In this project, a secure randomness approach is the use of `Chainlink VRF` (Verifiable Random Function), which is a far more secure way to handle this requirement. 
+>>
+>> - When using Chainlink VRF, it is actually an **asynchronous** operation. Our contract sends a tx (Request) to the chainlink node, paying the network gas fee *and* an oracle fee. But a result is not immediately available. Instead, the contract waits until the chainlink node interacts with it and delivers the requested random number (Response).
+***
+> Brownie has offers two classes that wrap functionality for **contract** interactions. 
+> Further reading in the [docs](https://eth-brownie.readthedocs.io/en/stable/api-network.html?highlight=from_abi#brownie.network.contract.Contract).
+> - `ProjectContract` is available inside the project, and since it is compiled by Brownie, it offers a wide range of contract-specific functionality.
+> - `Contract` is used for contracts that are **NOT** in the project, but are already deployed in whatever environment being worked on.
+> 
+>   This was used for the Lottery dependencies, in which the Chainlink contracts already existed in the testnets and thus just needed to be interacted with. Unlike the FundMe project, these dependencies were not copied manually to the contracts folder, so the only way of interacting with them was by knowing their Address and ABI.
+
+
+***
