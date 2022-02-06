@@ -50,6 +50,12 @@ In order to work on the contract in a local Ganache chain -- in which the Chainl
 
 - **Forking** Taking a "snapshot" of the current state of a mainnet and running it locally to interact with existing contracts deployed in it. 
 
+# 3 | Lottery 
+Loterry app where any user can participate and win the prize pot.
+- Users enter the lottery by paying a certain USD value of ETH.
+- Admin can choose when to close the lottery.
+- A random winner will be selected.
+
 # 🍫 Ganache
 Using [Ganache](https://trufflesuite.com/ganache/) to run a personal Ethereum blockchain locally to easily deploy and test and learn how the chain operates. 
 
@@ -78,3 +84,6 @@ Optional further testing can be done using:
 - Brownie mainnet forks
 - Custom mainnet forks
 - Local Ganache chains
+
+# 👀 Other
+- There is a Solidity compiler-specific [reason](https://ethereum.stackexchange.com/a/64109) as to why `address` and `address payable` are two different types. 
