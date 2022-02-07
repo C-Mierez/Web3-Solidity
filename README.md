@@ -49,7 +49,7 @@ In order to work on the contract in a local Ganache chain -- in which the Chainl
 
     This allows to later decide what contract to use when in the `deploy.py` script. Useful for local deployments in which the Chainlink contracts don't exist, and thus would require a mock in their place instead.
 
-- **Forking** Taking a "snapshot" of the current state of a mainnet and running it locally to interact with existing contracts deployed in it. 
+- **Forking:** Taking a "snapshot" of the current state of a mainnet and running it locally to interact with existing contracts deployed in it. 
 
 # 3 | Lottery 
 Loterry app where any user can participate and win the prize pot.
@@ -82,6 +82,13 @@ Brownie project structure has the following features:
 - `tests` 
 
 Used throughout the different sub-projects. Looking to see and compare how it facilitates development as opposed to doing things manually.
+
+## 👨‍🍳 Brownie Mixes
+There is a wide variety of Mixes available at the [Brownie Mixes github](https://github.com/brownie-mix) that can be used to speed up the initial set-up the projects.
+
+These repositories can be cloned, but Brownie also has a built-in option to *bake* them in. Using Chainlink as an example:
+
+    cmd: brownie bake chainlink-mix
 
 # 🧾 Tests
 Due to ease of use, tests are run mainly on a local **Ganache** chain. In case of having dependencies, these should be **Mocked**.
