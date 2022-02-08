@@ -135,3 +135,7 @@ Optional further testing can be done using:
 > 
 >     @pytest.fixture
 ***
+> Adding a forked Ganache network to Brownie network can be done using the following command: (Ex. Kovan Fork)
+>
+>     brownie networks add development kovan-fork-dev host=http://127.0.0.1 port=8545 mnemonic=brownie accounts=10 cmd=ganache-cli fork={ALCHEMY_KEY}
+***
