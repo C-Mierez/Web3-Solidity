@@ -1,6 +1,7 @@
 from brownie import FundMe, network, config, MockV3Aggregator
 
 from scripts.utils import get_account, deploy_mock_priceFeed, LOCAL_BLOCKCHAIN_ENV
+from scripts.fund_and_withdraw import fund, withdraw
 
 from web3 import Web3
 
@@ -33,3 +34,5 @@ def deploy_fund_me():
 
 def main():
     deploy_fund_me()
+    fund()
+    withdraw()
