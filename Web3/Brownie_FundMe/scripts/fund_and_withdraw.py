@@ -13,6 +13,8 @@ def fund():
     print(
         f"Funding with {Web3.fromWei(entrance_fee, 'ether')} fee... from {account.address}"
     )
+    print(f"Account Balance: {account.balance()}")
+    print(f"Contract Balance: {contract_fm.balance()}")
     tx = contract_fm.fund(
         {
             "from": account,
@@ -21,6 +23,8 @@ def fund():
     )
     tx.wait(1)
     print("Funded.")
+    print(f"Account Balance: {account.balance()}")
+    print(f"Contract Balance: {contract_fm.balance()}")
 
 
 def withdraw():
@@ -30,6 +34,8 @@ def withdraw():
     print("Withdrawing...")
     tx = contract_fm.withdraw({"from": account})
     tx.wait(1)
+    print(f"Account Balance: {account.balance()}")
+    print(f"Contract Balance: {contract_fm.balance()}")
     print("Withdrawn.")
 
 
