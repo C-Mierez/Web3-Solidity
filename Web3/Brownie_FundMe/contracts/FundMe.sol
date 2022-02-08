@@ -29,7 +29,7 @@ contract FundMe {
     }
 
     function getEntranceFee() public view returns (uint256) {
-        // Minimum USD value
+        // 50$ Minimum entrance fee
         uint256 minimumUSD = 50 * 10**18;
         uint256 price = getPrice();
         uint256 precision = 1 * 10**18;
@@ -53,6 +53,7 @@ contract FundMe {
 
     function getPrice() public view returns (uint256) {
         (, int256 answer, , , ) = priceFeed.latestRoundData();
+        // ETH/USD has 8 decimals
         return uint256(answer * (10**10));
     }
 
