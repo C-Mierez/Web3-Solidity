@@ -139,3 +139,9 @@ Optional further testing can be done using:
 >
 >     brownie networks add development kovan-fork-dev host=http://127.0.0.1 port=8545 mnemonic=brownie accounts=10 cmd=ganache-cli fork={ALCHEMY_KEY}
 ***
+> ERC-20 are tokens which are deployed on the chain using the [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/). This is a smart contract that **also** represents a token.
+>
+> Any custom token can be created as long as it follows the established standard.
+>
+> Or libraries like [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/) can be used for much easier development.
+***
