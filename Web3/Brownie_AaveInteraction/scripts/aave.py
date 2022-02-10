@@ -166,8 +166,8 @@ def get_lending_pool_from_provider():
 
 
 def main():
-    # aave_deposit()
-    # aave_borrow()
+    aave_deposit()
+    aave_borrow()
     aave_repay()
     print("\n")
     print("DEPOSITED, BORROWED AND REPAID!")
