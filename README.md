@@ -57,6 +57,18 @@ Loterry app where any user can participate and win the prize pot.
 - Admin can choose when to close the lottery.
 - A random winner will be selected using ``Chainlink VRF``.
 
+# 4 | AaveInteraction 
+Just for learning how to programatically interact with already existing contracts. 
+
+In this case, there will be a basic interaction with [Aave](https://aave.com/) contracts in the Kovan testnet.
+
+Steps:
+- Swap ETH for wETH
+- Deposit ETH into Aave
+- Borrow some DAI with the ETH collateral
+- Repay the loan
+
+No local contrcact deployments will be needed/used.
 ### 👩‍🍳 Brownie
 A complete rework in favour of modularization is made in comparison to the previous projects.
 - `utils.py` Contains far more generic methods that allow easier integration and switching between different working environments (Local networks, forks, testnets, mainnets).
