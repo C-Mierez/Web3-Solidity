@@ -157,3 +157,5 @@ Optional further testing can be done using:
 >
 > Or libraries like [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/) can be used for much easier development.
 ***
+> In Solidiy, it is a good practice to emit **Events** when updating a mapping or other key data stratuctures.
+***
