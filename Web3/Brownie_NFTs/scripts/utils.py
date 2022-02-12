@@ -6,6 +6,9 @@ ENV_LOCAL = ["development", "ganache-local"]
 # Global definition for Forked Blockchain dev environment names
 ENV_FORK = ["mainnet-fork", "rinkeby-fork", "kovan-fork"]
 
+# OpenSea URL for collectibles
+OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
+
 
 def get_account(index=None, id=None):
     """Get the the most suitable account to be used in the current dev environment.
