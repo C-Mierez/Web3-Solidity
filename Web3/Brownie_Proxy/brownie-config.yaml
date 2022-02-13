@@ -15,7 +15,7 @@ compiler:
       - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.4.0"
 
 networks:
-  default: ${DEFAULT_NETWORK:-"kovan-fork"}
+  default: ${DEFAULT_NETWORK:-development}
 
   development:
     default_config_network: rinkeby
