@@ -36,15 +36,15 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 
-def get_config(config_name, config_subtype=None, config_network=None):
+def get_config(config_name, config_group=None, config_network=None):
     """
     Grab a value from the brownie-config.yaml file if defined.
     If working on a local environment, the value is taken from the specified default network config instead.
 
         Args:
             config_name (string): Name of the config.
-            config_subtype (string, optional): Defined subtype in the brownie-config.yaml file. Defaults to None.
-            config_network (string, optional): Override network search and use config_network isntead. Defaults to None.
+            config_group (string, optional): Defined group in the brownie-config.yaml file. Defaults to None.
+            config_network (string, optional): Override network search and use config_network instead. Defaults to None.
     """
     ntwork = network.show_active()
     if config_network is not None:
@@ -52,17 +52,17 @@ def get_config(config_name, config_subtype=None, config_network=None):
     elif ntwork in ENV_LOCAL:
         ntwork = config["networks"]["development"]["default_config_network"]
     cnfig = config["networks"][ntwork]["config"]
-    return cnfig[config_subtype][config_name] if config_subtype else cnfig[config_name]
+    return cnfig[config_group][config_name] if config_group else cnfig[config_name]
 
 
-def get_contract(contract_name, contract_subtype=None):
+def get_contract(contract_name, contract_group=None):
     """
     Grab the contract addresses from the brownie-config.yaml file if defined.
     Otherwise, deploy Mocks of the contracts used (if not already deployed) and return it.
 
         Args:
             contract_name (string): Name of the contract.
-            contract_subtype (string, optional): Defined subtype in the brownie-config.yaml file. Defaults to None.
+            contract_group (string, optional): Defined group in the brownie-config.yaml file. Defaults to None.
 
         Returns:
             brownie.network.contract.ProjectContract: The most recently deployed version of the contract.
@@ -86,8 +86,8 @@ def get_contract(contract_name, contract_subtype=None):
         # Grab the contract address from the config file
         cnfig = config["networks"][network.show_active()]["contracts"]
         contract_address = (
-            cnfig[contract_subtype][contract_name]
-            if contract_subtype
+            cnfig[contract_group][contract_name]
+            if contract_group
             else cnfig[contract_name]
         )
 
