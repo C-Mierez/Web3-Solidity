@@ -1,24 +1,25 @@
-from scripts.utils import get_account, OPENSEA_URL
-from brownie import SimpleCollectible
+from scripts.utils import (
+    get_account,
+    OPENSEA_URL,
+)
+from brownie import AdvancedCollectible
 
-sample_token_uri = "https://ipfs.io/ipfs/Qmd9MCGtdVz2miNumBHDbvj8bigSgTwnr4SbyH6DNnpWdt?filename=0-PUG.json"
 
-
-def deploy_and_create():
+def create_collectible():
     account = get_account()
+    advanced_collectible = AdvancedCollectible[-1]
 
-    simple_collectible = SimpleCollectible.deploy({"from": account})
-
-    tx = simple_collectible.createCollectible(
-        sample_token_uri,
+    tx = advanced_collectible.createCollectible(
         {"from": account},
     )
     tx.wait(1)
+
     print(
-        f"SimpleCollectible created. OpenSea: {OPENSEA_URL.format(simple_collectible.address, simple_collectible.tokenCounter() - 1)}"
+        f"AdvancedCollectible created. OpenSea: {OPENSEA_URL.format(advanced_collectible.address, advanced_collectible.tokenCounter())}"
     )
-    return simple_collectible
+
+    return tx
 
 
 def main():
-    deploy_and_create()
+    return create_collectible()
