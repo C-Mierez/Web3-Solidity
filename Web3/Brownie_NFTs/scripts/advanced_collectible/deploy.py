@@ -1,6 +1,5 @@
 from scripts.utils import (
     get_account,
-    OPENSEA_URL,
     get_contract,
     get_config,
 )
