@@ -1,4 +1,5 @@
-from brownie import accounts, network, config, Contract
+from brownie import accounts, network, config, Contract, LinkToken, VRFCoordinatorMock
+from web3 import Web3
 
 # Global definition for Local Blockchain dev environment names
 ENV_LOCAL = ["development", "ganache-local"]
@@ -35,6 +36,25 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 
+def get_config(config_name, config_subtype=None, config_network=None):
+    """
+    Grab a value from the brownie-config.yaml file if defined.
+    If working on a local environment, the value is taken from the specified default network config instead.
+
+        Args:
+            config_name (string): Name of the config.
+            config_subtype (string, optional): Defined subtype in the brownie-config.yaml file. Defaults to None.
+            config_network (string, optional): Override network search and use config_network isntead. Defaults to None.
+    """
+    ntwork = network.show_active()
+    if config_network is not None:
+        ntwork = config_network
+    elif ntwork in ENV_LOCAL:
+        ntwork = config["networks"]["development"]["default_config_network"]
+    cnfig = config["networks"][ntwork]["config"]
+    return cnfig[config_subtype][config_name] if config_subtype else cnfig[config_name]
+
+
 def get_contract(contract_name, contract_subtype=None):
     """
     Grab the contract addresses from the brownie-config.yaml file if defined.
@@ -49,13 +69,14 @@ def get_contract(contract_name, contract_subtype=None):
     """
     # Mapping of contract names to their corresponding Mock type
     contract_to_mock = {
-        # "vrf_coordinator": VRFCoordinatorMock,
+        "link": LinkToken,
+        "vrf_coordinator": VRFCoordinatorMock,
     }
+    # Map the contract to its Mock type
+    contract_type = contract_to_mock[contract_name]
 
     # Choose the contract depending on the current environment
     if network.show_active() in ENV_LOCAL:
-        # Map the contract to its Mock type
-        contract_type = contract_to_mock[contract_name]
         # Check if the needed Mock has already been deployed, otherwise deploy it
         if len(contract_type) <= 0:
             _deploy_mocks()
@@ -63,11 +84,11 @@ def get_contract(contract_name, contract_subtype=None):
         contract = contract_type[-1]
     else:
         # Grab the contract address from the config file
-        config = config["networks"][network.show_active()]["contracts"]
+        cnfig = config["networks"][network.show_active()]["contracts"]
         contract_address = (
-            config[contract_subtype][contract_name]
+            cnfig[contract_subtype][contract_name]
             if contract_subtype
-            else config[contract_name]
+            else cnfig[contract_name]
         )
 
         # Using Contract class to interact with contracts that already exist and are deployed but are NOT in the project
@@ -97,5 +118,36 @@ def _deploy_mocks():
     #     {"from": account},
     # )
     """
+    print(f"Deploying Mocks for network {network.show_active()}...")
+    account = get_account()
 
-    pass
+    print("Deploying LinkToken...")
+    link_token = LinkToken.deploy({"from": account})
+    print(f"Deployed LinkToken at {link_token.address}...")
+    print("Deploying VRFCoordinatorMock...")
+    vrf_coordinator = VRFCoordinatorMock.deploy(link_token, {"from": account})
+    print(f"Deployed VRFCoordinatorMock at {vrf_coordinator.address}...")
+
+    print("Deployed Mocks.")
+
+
+def fund_with_erc20(
+    to_fund_address, erc20_token_contract, ether_amount=None, account=None
+):
+
+    account = account if account else get_account()
+    ether_amount = ether_amount if ether_amount else 0.1
+
+    print(
+        f"Funding {to_fund_address} with {ether_amount} {erc20_token_contract.symbol()}..."
+    )
+    tx = erc20_token_contract.transfer(
+        to_fund_address,
+        Web3.toWei(ether_amount, "ether"),
+        {"from": account},
+    )
+    tx.wait(1)
+    print(
+        f"Funded {to_fund_address} with {ether_amount} {erc20_token_contract.symbol()}."
+    )
+    return tx
