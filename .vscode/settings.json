@@ -1,4 +1,9 @@
 {
     "solidity.compileUsingRemoteVersion": "v0.8.11+commit.d7f03943",
-    "solidity.defaultCompiler": "remote"
+    "solidity.defaultCompiler": "remote",
+    "python.testing.pytestArgs": [
+        "Web3"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

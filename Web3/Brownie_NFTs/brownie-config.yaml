@@ -10,12 +10,26 @@ dependencies:
 compiler:
   solc:
     remappings:
-      # - "@aave=aave/protocol-v2@1.0.1"
+      # - '@aave=aave/protocol-v2@1.0.1'
       - "@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1"
       - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@3.4.0"
 
 networks:
-  default: ${DEFAULT_NETWORK:-kovan-fork}
+  default: ${DEFAULT_NETWORK:-development}
+  development:
+    default_config_network: rinkeby
+
+  rinkeby:
+    verify: True
+    contracts:
+      tokens:
+        link: "0x01be23585060835e02b77ef475b0cc51aa1e0709"
+      vrf:
+        vrf_coordinator: "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"
+    config:
+      vrf:
+        keyhash: "0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311"
+        fee: 0.1 # Ether
 
   kovan:
     verify: True
@@ -25,9 +39,10 @@ networks:
         dai: "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD" # Aave changes this address frequently
       price_feeds:
         dai_eth: "0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541" # 18 decimals
-    settings:
+    config:
       # Example, Chainlink VRF keyhash parameter
-      # keyhash: "0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311"
+      # vrf:
+      #   keyhash: '0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311'
 
   kovan-fork:
     contracts:
@@ -36,11 +51,11 @@ networks:
         dai: "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD" # Aave changes this address frequently
       price_feeds:
         dai_eth: "0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541" # 18 decimals
-    settings:
+    config:
 
   mainnet:
     verify: True
     contracts:
       tokens:
         weth: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-    settings:
+    config:
