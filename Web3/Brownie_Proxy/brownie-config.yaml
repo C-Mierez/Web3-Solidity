@@ -1,0 +1,41 @@
+dotenv: .env
+
+wallets:
+  from_key: ${PRIVATE_KEY}
+
+dependencies:
+  # - aave/protocol-v2@1.0.1
+  # - smartcontractkit/chainlink-brownie-contracts@1.1.1
+  - OpenZeppelin/openzeppelin-contracts@4.4.0
+compiler:
+  solc:
+    remappings:
+      # - "@aave=aave/protocol-v2@1.0.1"
+      # - "@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1"
+      - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.4.0"
+
+networks:
+  default: ${DEFAULT_NETWORK:-"kovan-fork"}
+
+  development:
+    default_config_network: rinkeby
+
+  rinkeby:
+    verify: True
+    contracts:
+      tokens:
+        link: "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"
+    config:
+
+  kovan:
+    verify: True
+    contracts:
+      tokens:
+        weth: "0xd0a1e359811322d97991e03f863a0c30c2cf029c"
+        dai: "0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD" # Aave changes this address frequently
+      price_feeds:
+        dai_eth: "0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541" # 18 decimals
+    config:
+      # Example, Chainlink VRF keyhash parameter
+      # vrf:
+      #   keyhash: '0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311'
