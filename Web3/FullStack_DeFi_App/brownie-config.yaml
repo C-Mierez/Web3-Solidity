@@ -23,7 +23,14 @@ networks:
   rinkeby:
     contracts:
       tokens:
-        link: "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"
+        link: "0x01be23585060835e02b77ef475b0cc51aa1e0709"
+        fau: "0xFab46E002BbF0b4509813474841E0716E6730136"
+        weth: "0xc778417e063141139fce010982780140aa0cd5ab"
+      price_feeds:
+        dai_usd: "0x2bA49Aaa16E6afD2a993473cfB70Fa8559B523cF"
+        eth_usd: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e"
+        link_usd: "0xd8bD0a1cB028a31AA859A21A3758685a95dE4623"
+        stonk_usd: "0x7794ee502922e2b723432DDD852B3C30A911F021" # Actually Matic :)
     config:
       verify: True
       # Example, Chainlink VRF keyhash parameter
