@@ -18,7 +18,7 @@ contract RewardToken is ERC20, AccessControlEnumerable {
     function mint(address _to, uint256 _amount) public {
         require(
             hasRole(MINTER_ROLE, _msgSender()),
-            "Must have printer role to mint."
+            "Must have minter role to mint."
         );
         _mint(_to, _amount);
     }
@@ -26,7 +26,7 @@ contract RewardToken is ERC20, AccessControlEnumerable {
     // Disgusting, I know
     function addMinter(address _account) public {
         require(
-            hasRole(MINTER_ROLE, _msgSender()),
+            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
             "Must have admin role to add minter."
         );
         _setupRole(MINTER_ROLE, _account);
