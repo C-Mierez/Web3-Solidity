@@ -114,12 +114,12 @@ contract TokenFarm is Ownable {
         if (uniqueStakedCount[_user] <= 0) {
             return 0;
         }
-        (uint256 price, uint256 decimals) = getTokenUSDValue(_token);
+        (uint256 price, uint256 decimals) = getTokenValue(_token);
 
         return (stakedBalance[_user][_token] * price) / (10**decimals);
     }
 
-    function getTokenUSDValue(address _token)
+    function getTokenValue(address _token)
         public
         view
         returns (uint256, uint256)
