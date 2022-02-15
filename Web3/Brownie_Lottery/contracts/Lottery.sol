@@ -122,7 +122,7 @@ contract Lottery is VRFConsumerBase, Ownable {
 
         // Reset the lottery
         participants = new address payable[](0);
-        lottery_state = LOTTERY_STATE.CLOSED;
+        lottery_state = LOTTERY_STATE.OPEN;
         randomness = _randomness;
     }
 }

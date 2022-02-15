@@ -10,7 +10,6 @@ def fund_with_link():
     account = get_account()
     advanced_collectible = AdvancedCollectible[-1]
 
-    print
     tx = fund_with_erc20(
         advanced_collectible.address,
         get_contract("link", "tokens"),
