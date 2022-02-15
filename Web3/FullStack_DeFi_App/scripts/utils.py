@@ -137,6 +137,10 @@ def get_contract(contract_name, contract_group=None):
     return contract
 
 
+DECIMALS = 18
+INITIAL_PRICE_FEED_VALUE = 3000
+
+
 def _deploy_mocks():
     """Deploy all Mocks used in this project.
     Need to manually define which ones to be deployed, using their appropriate parameters, since they are
@@ -157,8 +161,8 @@ def _deploy_mocks():
     print("Deploying Mocks...")
     print("Deploying MockV3Aggregator...")
     contract = MockV3Aggregator.deploy(
-        18,
-        Web3.toWei(3000, "ether"),
+        DECIMALS,
+        Web3.toWei(INITIAL_PRICE_FEED_VALUE, "ether"),
         {"from": account},
     )
     print(f"Deployed MockV3Aggregator at {contract.address}")
