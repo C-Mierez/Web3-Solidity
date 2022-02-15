@@ -1,5 +1,5 @@
 from scripts.deploy import deploy_farm, deploy_stonk_token
-from scripts.add_allowed_token import add_allowed_tokens
+from scripts.add_allowed_tokens import add_allowed_tokens
 
 
 def main():
