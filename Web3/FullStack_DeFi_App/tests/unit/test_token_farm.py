@@ -102,11 +102,48 @@ def test_stake_tokens(to_stake_amount):
     assert token_farm.uniqueStakedCount(staker_account.address) == 1
 
     assert token_farm.stakers(0) == staker_account.address
-    return account, reward_token, token_farm
+    return (
+        account,
+        reward_token,
+        token_farm,
+        staker_account,
+        to_stake_token,
+        to_stake_amount,
+    )
+
+
+def test_unstake_tokens(to_stake_amount):
+    (
+        account,
+        reward_token,
+        token_farm,
+        staker_account,
+        to_stake_token,
+        to_stake_amount,
+    ) = test_stake_tokens(to_stake_amount)
+
+    token_farm.unstakeTokens(
+        to_stake_token.address,
+        {"from": staker_account},
+    ).wait(1)
+
+    assert to_stake_token.balanceOf(staker_account.address) == to_stake_amount
+    assert token_farm.stakedBalance(staker_account.address, to_stake_token) == 0
+    assert token_farm.uniqueStakedCount(staker_account.address) == 0
+
+    with pytest.raises(exceptions.VirtualMachineError):
+        token_farm.stakers(0) != staker_account.address
 
 
 def test_mint_rewards(to_stake_amount):
-    account, reward_token, token_farm = test_stake_tokens(to_stake_amount)
+    (
+        account,
+        reward_token,
+        token_farm,
+        _,
+        _,
+        _,
+    ) = test_stake_tokens(to_stake_amount)
 
     initial_balance = reward_token.balanceOf(account.address)
     initial_supply = reward_token.totalSupply()
@@ -129,5 +166,103 @@ def test_mint_rewards(to_stake_amount):
     # Expecting to mint 3000 Stonks
     assert reward_token.balanceOf(account.address) == initial_balance + Web3.toWei(
         INITIAL_PRICE_FEED_VALUE,
+        "ether",
+    )
+
+
+def test_can_get_token_value_if_allowed():
+    account, reward_token, token_farm = _init()
+
+    to_allow_token = reward_token
+    to_allow_token_price_feed = get_contract("stonk_usd", "price_feeds")
+
+    token_farm.addAllowedToken(
+        to_allow_token.address,
+        to_allow_token_price_feed.address,
+        {"from": account},
+    ).wait(1)
+
+    assert token_farm.isAllowedToken(to_allow_token.address)
+
+    assert token_farm.getTokenValue(to_allow_token.address) == (
+        Web3.toWei(INITIAL_PRICE_FEED_VALUE, "ether"),
+        DECIMALS,
+    )
+
+    return account, reward_token, token_farm, to_allow_token
+
+
+def test_cant_get_token_value_if_not_allowed():
+    _, reward_token, token_farm = _init()
+
+    to_allow_token = reward_token
+
+    assert not token_farm.isAllowedToken(to_allow_token.address)
+
+    with pytest.raises(exceptions.VirtualMachineError):
+        token_farm.getTokenValue(to_allow_token.address) == (
+            Web3.toWei(INITIAL_PRICE_FEED_VALUE, "ether"),
+            DECIMALS,
+        )
+
+
+def test_get_user_token_tvl(to_stake_amount):
+    (
+        _,
+        _,
+        token_farm,
+        staker_account,
+        to_stake_token,
+        to_stake_amount,
+    ) = test_stake_tokens(to_stake_amount)
+
+    token_tvl = token_farm.getUserTokenTVL(
+        staker_account.address,
+        to_stake_token.address,
+    )
+
+    assert token_tvl == Web3.toWei(
+        INITIAL_PRICE_FEED_VALUE * Web3.fromWei(to_stake_amount, "ether"), "ether"
+    )
+
+
+def test_get_user_tvl(to_stake_amount):
+    (
+        _,
+        _,
+        token_farm,
+        staker_account,
+        to_stake_token,
+        to_stake_amount,
+    ) = test_stake_tokens(
+        to_stake_amount
+    )  # Stake stonks
+
+    fau_token = get_contract("fau", "tokens")
+    fau_amount = Web3.toWei(1, "ether")
+
+    fau_token.faucet(fau_amount, {"from": staker_account})
+    fau_token.approve(
+        token_farm.address,
+        fau_amount,
+        {"from": staker_account},
+    ).wait(1)
+
+    token_farm.stakeTokens(
+        fau_amount,
+        fau_token.address,
+        {"from": staker_account},
+    ).wait(
+        1
+    )  # Stake Link
+
+    token_tvl = token_farm.getUserTVL(
+        staker_account.address,
+    )
+
+    assert token_farm.uniqueStakedCount(staker_account.address) == 2
+
+    assert token_tvl == Web3.toWei(
+        (INITIAL_PRICE_FEED_VALUE * Web3.fromWei(to_stake_amount, "ether") * 2),
         "ether",
     )
