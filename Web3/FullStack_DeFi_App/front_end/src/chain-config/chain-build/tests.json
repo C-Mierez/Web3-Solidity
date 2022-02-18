@@ -1,0 +1,120 @@
+{
+  "contracts": {
+    "MockDAI": "7d242f072e1d5f6321d5358558972c54d6f41d8e",
+    "MockLINK": "68de96a8b4f5c33234f11bc1380ecb85179479fa",
+    "MockV3Aggregator": "9e734e161b5cafcca52a917f10266f5a8bc05b28",
+    "MockWETH": "6dc6e6284ea2502b66f85f07b38408f224ed5f2a",
+    "OpenZeppelin/openzeppelin-contracts@4.4.0/ERC20": "5c27d7156fdbfe889902cc167df697405a50ad20",
+    "OpenZeppelin/openzeppelin-contracts@4.4.0/EnumerableSet": "1ce946f6a4eaa185320328620ccf999b9e86db7c",
+    "OpenZeppelin/openzeppelin-contracts@4.4.0/Strings": "1ce946f6a4eaa185320328620ccf999b9e86db7c",
+    "RewardToken": "877cbef96cd03d76324eab17fb0adb0fe0186ce3",
+    "TokenFarm": "d1bb25d9f256a659c0267d845f36d2da62de8468"
+  },
+  "tests": {
+    "tests/unit/test_reward_token.py": {
+      "coverage": false,
+      "isolated": false,
+      "results": ".....",
+      "sha1": "1d33b4f4a424c6d3cfb38da68f5f7f93ab5ea8bc",
+      "txhash": [
+        "4a49b315e15c94d2f1698d9a78fc91ddeb9358cf",
+        "55f80a346f785f80bb2ef73cbfc29a0c3afc74c8"
+      ]
+    },
+    "tests/unit/test_token_farm.py": {
+      "coverage": false,
+      "isolated": false,
+      "results": "...........",
+      "sha1": "b74d6f2ed1ea505f59461e668b6c3c9ad50ab46d",
+      "txhash": [
+        "97b95093d6e3181713848d5f32a719b936f0b4fa"
+      ]
+    }
+  },
+  "tx": {
+    "4a49b315e15c94d2f1698d9a78fc91ddeb9358cf": {
+      "RewardToken": {
+        "0": [
+          [
+            21
+          ],
+          [],
+          []
+        ],
+        "14": [
+          [
+            18
+          ],
+          [
+            58
+          ],
+          []
+        ],
+        "5": [
+          [],
+          [],
+          []
+        ],
+        "8": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "55f80a346f785f80bb2ef73cbfc29a0c3afc74c8": {
+      "RewardToken": {
+        "0": [
+          [
+            21
+          ],
+          [],
+          []
+        ],
+        "1": [
+          [],
+          [],
+          []
+        ],
+        "14": [
+          [
+            23
+          ],
+          [
+            59
+          ],
+          []
+        ],
+        "5": [
+          [],
+          [],
+          []
+        ],
+        "8": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "97b95093d6e3181713848d5f32a719b936f0b4fa": {
+      "TokenFarm": {
+        "15": [
+          [],
+          [],
+          []
+        ],
+        "4": [
+          [],
+          [],
+          []
+        ],
+        "8": [
+          [],
+          [],
+          []
+        ]
+      }
+    }
+  }
+}
