@@ -118,11 +118,11 @@ def get_contract(contract_name, contract_group=None):
         contract = contract_type[-1]
     else:
         # Grab the contract address from the config file
-        config = config["networks"][network.show_active()]["contracts"]
+        cnfig = config["networks"][network.show_active()]["contracts"]
         contract_address = (
-            config[contract_group][contract_name]
+            cnfig[contract_group][contract_name]
             if contract_group
-            else config[contract_name]
+            else cnfig[contract_name]
         )
 
         # Using Contract class to interact with contracts that already exist and are deployed but are NOT in the project
